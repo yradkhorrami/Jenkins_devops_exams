@@ -1,7 +1,7 @@
 pipeline
 {
 	agent any
-	options { timestamps(); ansiColor('xterm'); shell('/bin/bash') }
+	options { timestamps() }
 
 	environment
 	{
