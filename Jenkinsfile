@@ -12,6 +12,7 @@ pipeline {
   }
 
   stages {
+
     stage('Docker Build: movie-service') {
       steps {
         sh """
@@ -20,7 +21,6 @@ pipeline {
       }
     }
 
-  stages {
     stage('Docker Build: cast-service') {
       steps {
         sh """
