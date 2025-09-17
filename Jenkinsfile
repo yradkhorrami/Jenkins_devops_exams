@@ -19,10 +19,10 @@ pipeline {
     }
 
     stage('Docker Push (both)') {
-      environment { DOCKERHUB = credentials('DOCKER_HUB_PASS') } // id with user/pass or token
+      environment { DOCKER_PASS = credentials('DOCKER_HUB_PASS') } // id with user/pass or token
       steps {
         sh """
-          echo "${DOCKERHUB_PSW}" | docker login -u "${DOCKERHUB_USR}" --password-stdin
+          echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
           docker push ${MOVIE_REPO}:${IMAGE_TAG}
           docker push ${CAST_REPO}:${IMAGE_TAG}
         """
