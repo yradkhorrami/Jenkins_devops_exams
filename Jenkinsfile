@@ -10,17 +10,6 @@ pipeline {
   }
 
   stages {
-    stage('Declarative: Checkout SCM') { steps { /* Jenkins adds this automatically */ } }
-    stage('Checkout') { steps { checkout scm } }
-
-    stage('Docker Build: movie-service') {
-      steps {
-        sh """
-          docker build -t ${MOVIE_REPO}:${IMAGE_TAG} movie-service
-        """
-      }
-    }
-
     stage('Docker Build: cast-service') {
       steps {
         sh """
@@ -82,7 +71,10 @@ pipeline {
     }
 
     stage('Deploy to QA (optional)') {
-      when { allOf { branch 'main'; beforeAgent true } }
+      when{
+		beforeAgent true
+		branch 'main'
+	  }
       steps {
         sh """
           helm upgrade --install movie charts -n qa  -f charts/env/qa.yaml \
