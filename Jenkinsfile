@@ -12,6 +12,15 @@ pipeline {
   }
 
   stages {
+    stage('Docker Build: movie-service') {
+      steps {
+        sh """
+          docker build -t ${MOVIE_REPO}:${IMAGE_TAG} movie-service
+        """
+      }
+    }
+
+  stages {
     stage('Docker Build: cast-service') {
       steps {
         sh """
