@@ -19,7 +19,7 @@ pipeline {
     }
 
     stage('Docker Push (both)') {
-      environment { DOCKERHUB = credentials('dockerhub-creds') } // id with user/pass or token
+      environment { DOCKERHUB = credentials('DOCKER_HUB_PASS') } // id with user/pass or token
       steps {
         sh """
           echo "${DOCKERHUB_PSW}" | docker login -u "${DOCKERHUB_USR}" --password-stdin
