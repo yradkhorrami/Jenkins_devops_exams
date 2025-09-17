@@ -21,11 +21,13 @@ pipeline {
     stage('Docker Push (both)') {
       environment { DOCKER_PASS = credentials('DOCKER_HUB_PASS') } // id with user/pass or token
       steps {
-        sh """
-          echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
-          docker push ${MOVIE_REPO}:${IMAGE_TAG}
-          docker push ${CAST_REPO}:${IMAGE_TAG}
-        """
+        sh '''
+        #!/bin/bash
+        set -eux
+        echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
+        docker push ${MOVIE_REPO}:${IMAGE_TAG}
+        docker push ${CAST_REPO}:${IMAGE_TAG}
+        '''
       }
     }
 
