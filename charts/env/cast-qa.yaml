@@ -1,0 +1,9 @@
+image:
+  repository: yradkhorrami/cast-service
+  tag: v.22.0
+service:
+  nodePort: 31008
+healthPath: "/api/v1/casts/openapi.json"
+env:
+  databaseUri: "postgresql://cast_db_username:cast_db_password@cast-db/cast_db_dev"
+  castServiceUrl: ""

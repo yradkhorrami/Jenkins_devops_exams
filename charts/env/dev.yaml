@@ -1,0 +1,9 @@
+image:
+  repository: yradkhorrami/movie-service
+  tag: v.22.0
+service:
+  nodePort: 30007
+healthPath: "/api/v1/movies/openapi.json"
+env:
+  databaseUri: "postgresql://movie_db_username:movie_db_password@movie-db/movie_db_dev"
+  castServiceUrl: "http://cast-fastapiapp.dev.svc.cluster.local:80/api/v1/casts/"
