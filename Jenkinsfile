@@ -7,7 +7,8 @@ pipeline {
 	DOCKER_ID	= 'yradkhorrami'
     MOVIE_REPO = 'yradkhorrami/movie-service'
     CAST_REPO  = 'yradkhorrami/cast-service'
-    IMAGE_TAG  = "${env.BUILD_NUMBER}"        // or: sh(returnStdout:true, script:'git rev-parse --short HEAD').trim()
+    IMAGE_TAG  = "v.${BUILD_ID}.0"        // or: sh(returnStdout:true, script:'git rev-parse --short HEAD').trim()
+    //IMAGE_TAG  = "${env.BUILD_NUMBER}"        // or: sh(returnStdout:true, script:'git rev-parse --short HEAD').trim()
   }
 
   stages {
