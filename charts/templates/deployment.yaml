@@ -29,22 +29,39 @@ spec:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
+          env:
+            - name: DATABASE_URI
+              value: {{ .Values.env.databaseUri | quote }}
+            - name: CAST_SERVICE_HOST_URL
+              value: {{ .Values.env.castServiceUrl | quote }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/bin/sh","-c"]
+          args: ["exec uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+          command: ["uvicorn"]
+          args: ["app.main:app","--host","0.0.0.0","--port","8000"]
           ports:
             - name: http
               containerPort: 8000
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /api/v1/checkapi
+              path: {{ .Values.healthPath }}
               port: http
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
           readinessProbe:
             httpGet:
-              path: /api/v1/checkapi
+              path: {{ .Values.healthPath }}
               port: http
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
