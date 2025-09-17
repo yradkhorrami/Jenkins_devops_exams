@@ -4,6 +4,7 @@ pipeline {
 
   environment {
     // Use Docker Hub (matches what you pushed): change if you use GitLab registry
+	DOCKER_ID	= 'yradkhorrami'
     MOVIE_REPO = 'yradkhorrami/movie-service'
     CAST_REPO  = 'yradkhorrami/cast-service'
     IMAGE_TAG  = "${env.BUILD_NUMBER}"        // or: sh(returnStdout:true, script:'git rev-parse --short HEAD').trim()
